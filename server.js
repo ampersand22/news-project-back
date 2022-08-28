@@ -40,9 +40,14 @@ app.use(cors())
 app.use(express.urlencoded({ extended: false }))
 
 
-Articles.create(articleSeed, (err, data) => {
-    console.log('added hero data');
-})
+// Articles.create(articleSeed, (err, data) => {
+//     console.log('added hero data');
+// })
+
+Articles.count({} , (err , data)=> {
+    if ( err ) console.log( err.message );
+     console.log ( `There are ${data} articles in this database` );
+ });
 
 
 // Get
@@ -61,7 +66,7 @@ app.post('/news', (req, res) => {
 
 app.get('/news/seed', (req, res)=>{
     Articles.create(articleSeed, (err, foundArticles)=>{
-        res.json(foundArticles);
+        res.json(foundArticles)
     });
 });
 
