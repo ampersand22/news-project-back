@@ -71,6 +71,13 @@ app.get('/news/seed', (req, res)=>{
 });
 
 
+//Test Route
+app.get('/' , (req, res) => {
+    res.send('Hello World!');
+  });
+  
+
+
 
 
 
