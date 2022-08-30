@@ -50,7 +50,7 @@ Articles.count({} , (err , data)=> {
  });
 
 
-
+//Edit
 app.put("/news/:id",(req, res) => {
     Articles.findByIdAndUpdate(
         req.params.id,
