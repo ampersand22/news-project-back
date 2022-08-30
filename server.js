@@ -50,25 +50,43 @@ Articles.count({} , (err , data)=> {
  });
 
 
-// Get
+
+app.put("/news/:id",(req, res) => {
+    Articles.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {new: true},
+        (err, data) => {
+            res.json(data);
+        })
+})
+
+//Delete
+app.delete("/news/:id", (req, res) => {
+    Articles.findByIdAndRemove(req.params.id, (err, data) => {
+        res.json(data);
+    })
+})
+
+// Get/Index
 app.get('/news', (req, res)=>{
     Articles.find({}, (err, foundArticles)=>{
         res.json(foundArticles);
     });
 });
 
-// Post
+// Post/Create
 app.post('/news', (req, res) => {
     Articles.create(req.body, (err, createdArticles) => {
         res.json(createdArticles);
     })
 })
 
-app.get('/news/seed', (req, res)=>{
-    Articles.create(articleSeed, (err, foundArticles)=>{
-        res.json(foundArticles)
-    });
-});
+// app.get('/news/seed', (req, res)=>{
+//     Articles.create(articleSeed, (err, foundArticles)=>{
+//         res.json(foundArticles)
+//     });
+// });
 
 
 //Test Route
