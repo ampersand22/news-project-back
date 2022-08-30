@@ -44,13 +44,13 @@ app.use(express.urlencoded({ extended: false }))
 //     console.log('added hero data');
 // })
 
-Articles.count({} , (err , data)=> {
-    if ( err ) console.log( err.message );
-     console.log ( `There are ${data} articles in this database` );
- });
+// Articles.count({} , (err , data)=> {
+//     if ( err ) console.log( err.message );
+//      console.log ( `There are ${data} articles in this database` );
+//  });
 
 
-
+/// PUT //////
 app.put("/news/:id",(req, res) => {
     Articles.findByIdAndUpdate(
         req.params.id,
@@ -93,7 +93,7 @@ app.post('/news', (req, res) => {
 app.get('/' , (req, res) => {
     res.send('Hello World!');
   });
-  
+
 
 
 
