@@ -39,32 +39,10 @@ app.use(express.json())
 app.use(cors())
 app.use(express.urlencoded({ extended: false }))
 
-
-// Articles.create(articleSeed, (err, data) => {
-//     console.log('added hero data');
-// })
-
-Articles.count({} , (err , data)=> {
-    if ( err ) console.log( err.message );
-     console.log ( `There are ${data} articles in this database` );
- });
-
-
-
-app.put("/news/:id",(req, res) => {
-    Articles.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        {new: true},
-        (err, data) => {
-            res.json(data);
-        })
-})
-
-//Delete
-app.delete("/news/:id", (req, res) => {
-    Articles.findByIdAndRemove(req.params.id, (err, data) => {
-        res.json(data);
+// Post/Create
+app.post('/news', (req, res) => {
+    Articles.create(req.body, (err, createdArticles) => {
+        res.json(createdArticles);
     })
 })
 
@@ -75,30 +53,23 @@ app.get('/news', (req, res)=>{
     });
 });
 
-// Post/Create
-app.post('/news', (req, res) => {
-    Articles.create(req.body, (err, createdArticles) => {
-        res.json(createdArticles);
-    })
+//Delete
+app.delete("/news/:id", (req, res) => {
+    Articles.findByIdAndRemove(req.params.id, (err, data) => {
+        res.json(data);
+    });
+});
+
+// Edit/Update Route
+app.put("/news/:id",(req, res) => {
+    Articles.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {new: true},
+        (err, data) => {
+            res.json(data);
+        })
 })
-
-// app.get('/news/seed', (req, res)=>{
-//     Articles.create(articleSeed, (err, foundArticles)=>{
-//         res.json(foundArticles)
-//     });
-// });
-
-
-//Test Route
-app.get('/' , (req, res) => {
-    res.send('Hello World!');
-  });
-  
-
-
-
-
-
 
 /// LISTENING ////
 
