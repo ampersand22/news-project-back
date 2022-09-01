@@ -18,7 +18,7 @@ const userController = require('./controllers/users_controller.js')
 //Port
 //___________________
 // Allow use of Heroku's port or your own local port, depending on the environment
-const PORT = 3003;
+const PORT = process.env.PORT || 3003;
 
 //___________________
 //Database
@@ -45,6 +45,10 @@ app.use(express.urlencoded({ extended: false }))
 // make sure that other middlewear runs first
 app.use('/', userController)
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+});
 
 // Post/Create
 app.post('/news', (req, res) => {
@@ -55,10 +59,21 @@ app.post('/news', (req, res) => {
 
 // Get/Index
 app.get('/news', (req, res)=>{
-    Articles.find({}, (err, foundArticles)=>{
-        res.json(foundArticles);
-    });
-});
+    request(
+        { url: 'https://news-project-back.herokuapp.com/news'},
+        Articles.find({}, (error, response, foundArticles) => {
+            if (error || response.statusCode !== 200) {
+                return res.status(500).json({ type: 'error', message: err.message })
+            }
+            res.json(JSON.parse(foundArticles))
+            }
+        )
+    )
+})
+    // Articles.find({}, (err, foundArticles)=>{
+    //     res.json(foundArticles);
+    // });
+// });
 
 //Delete
 app.delete("/news/:id", (req, res) => {
