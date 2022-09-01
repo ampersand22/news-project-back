@@ -9,12 +9,16 @@ const db = mongoose.connection;
 require('dotenv').config()
 const Articles = require('./models/Articles.js')
 const articleSeed = require('./models/articleSeed.js')
+const Users = require('./models/Users.js')
+const bcrypt = require('bcrypt');
+const userController = require('./controllers/users_controller.js')
+
 
 //___________________
 //Port
 //___________________
 // Allow use of Heroku's port or your own local port, depending on the environment
-const PORT = process.env.PORT || 3003;
+const PORT = 3003;
 
 //___________________
 //Database
@@ -38,6 +42,9 @@ db.on('disconnected', () => console.log('mongo disconnected'));
 app.use(express.json())
 app.use(cors())
 app.use(express.urlencoded({ extended: false }))
+// make sure that other middlewear runs first
+app.use('/', userController)
+
 
 // Post/Create
 app.post('/news', (req, res) => {
@@ -70,6 +77,16 @@ app.put("/news/:id",(req, res) => {
             res.json(data);
         })
 })
+
+
+// // USER POST
+// // Users create
+app.post('/register', (req, res) => {
+    Users.create(req.body, (err, createdUsers) => {
+        res.json(createdUsers);
+    })
+})
+
 
 /// LISTENING ////
 
