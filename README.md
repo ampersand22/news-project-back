@@ -1,3 +1,3 @@
 # news-project-back
 
-#successfully cloned by Derrick
+#Teamwork copy
