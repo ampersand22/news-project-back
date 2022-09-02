@@ -41,7 +41,9 @@ db.on('disconnected', () => console.log('mongo disconnected'));
 //// MIDDLEWEAR
 app.use(express.json())
 app.use(cors())
+
 app.use(express.urlencoded({ extended: false }))
+
 // make sure that other middlewear runs first
 app.use('/', userController)
 
