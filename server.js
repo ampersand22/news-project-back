@@ -61,21 +61,21 @@ app.post('/news', (req, res) => {
 
 // Get/Index
 app.get('/news', (req, res)=>{
-    request(
-        { url: 'https://news-project-back.herokuapp.com/news'},
-        Articles.find({}, (error, response, foundArticles) => {
-            if (error || response.statusCode !== 200) {
-                return res.status(500).json({ type: 'error', message: err.message })
-            }
-            res.json(JSON.parse(foundArticles))
-            }
-        )
-    )
-})
-    // Articles.find({}, (err, foundArticles)=>{
-    //     res.json(foundArticles);
-    // });
-// });
+//     request(
+//         { url: 'https://news-project-back.herokuapp.com/news'},
+//         Articles.find({}, (error, response, foundArticles) => {
+//             if (error || response.statusCode !== 200) {
+//                 return res.status(500).json({ type: 'error', message: err.message })
+//             }
+//             res.json(JSON.parse(foundArticles))
+//             }
+//         )
+//     )
+// })
+    Articles.find({}, (err, foundArticles)=>{
+        res.json(foundArticles);
+    });
+});
 
 //Delete
 app.delete("/news/:id", (req, res) => {
